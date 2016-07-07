@@ -8,7 +8,7 @@ var bluetoothHciSocket = new BluetoothHciSocket();
 bluetoothHciSocket.on('data', function(data) {
   console.log('data(hex): ' + data.toString('hex'));
   //console.log('data(ascii): ' + data.toString('ascii'));
-  if((new Date().getTime()-TempTime)>3000)
+  if((new Date().getTime()-TempTime)>5000)
   {
     console.log('stoptime:' + (new Date().getTime()-TempTime));
     bluetoothHciSocket.stop();
