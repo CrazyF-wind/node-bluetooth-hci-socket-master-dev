@@ -4,6 +4,13 @@ var dbtools=require('./dbtools');
 var TempTime=new Date().getTime();
 var bluetoothHciSocket = new BluetoothHciSocket();
 
+const macName = {
+  '00:4d:32:07:91:9c': 'AM4'
+  , 'c8:0f:10:51:e6:5a': 'MI1S'
+  , '00:4d:32:07:90:4b': 'AM4'
+  , '00:4d:32:07:92:09': 'AM4'
+  , 'a4:b4:76:5e:b6:8d': 'Honor zero-68D'
+};
 
 bluetoothHciSocket.on('data', function(data) {
   console.log('data(hex): ' + data.toString('hex'));
@@ -43,12 +50,14 @@ bluetoothHciSocket.on('data', function(data) {
           console.log('\t' + eir.toString('hex'));
           console.log('ser\t' + rssi);
           console.log('time: ' + (new Date().getTime()-TempTime));
+          var mac=gapAddr.toString('hex').match(/.{1,2}/g).reverse().join(':');
           var args=
           {
-            "mac":gapAddr.toString('hex').match(/.{1,2}/g).reverse().join(':'),
-            "name":eir.toString('ascii'),
+            "mac":mac,
+            "name":macName[mac],
             "RSSI":rssi,
-            "time":new Date().getTime()
+            "time":new Date().getTime(),
+            "flag":"model_1"
           };
           dbtools.insertdb(args);
         }
