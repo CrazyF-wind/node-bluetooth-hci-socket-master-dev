@@ -15,7 +15,7 @@ const macName = {
 bluetoothHciSocket.on('data', function(data) {
   console.log('data(hex): ' + data.toString('hex'));
   //console.log('data(ascii): ' + data.toString('ascii'));
-  if((new Date().getTime()-TempTime)>5000)
+  if((new Date().getTime()-TempTime)>300000)
   {
     console.log('stoptime:' + (new Date().getTime()-TempTime));
     bluetoothHciSocket.stop();
@@ -57,7 +57,9 @@ bluetoothHciSocket.on('data', function(data) {
             "name":macName[mac],
             "RSSI":rssi,
             "time":new Date().getTime(),
-            "flag":"model_1"
+            "flag":"model_1",
+            "mi":5,
+            "datetime":new Date()
           };
           dbtools.insertdb(args);
         }
