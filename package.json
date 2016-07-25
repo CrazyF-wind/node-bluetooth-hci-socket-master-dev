@@ -1,6 +1,6 @@
 {
-  "name": "bluetooth-hci-socket",
-  "version": "0.4.4",
+  "name": "andon-bluetooth-lescan-temp",
+  "version": "1.0.1",
   "description": "Bluetooth HCI socket binding for Node.js",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sandeepmistry/node-bluetooth-hci-socket.git"
+    "url": "https://github.com/CrazyF-wind/node-bluetooth-hci-socket-master-dev"
   },
   "keywords": [
     "HCI",
@@ -19,9 +19,9 @@
   "author": "Sandeep Mistry <sandeep.mistry@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sandeepmistry/node-bluetooth-hci-socket/issues"
+    "url": "https://github.com/CrazyF-wind/node-bluetooth-hci-socket-master-dev/issues"
   },
-  "homepage": "https://github.com/sandeepmistry/node-bluetooth-hci-socket",
+  "homepage": "https://github.com/CrazyF-wind/node-bluetooth-hci-socket-master-dev",
   "os": [
     "linux",
     "android",
