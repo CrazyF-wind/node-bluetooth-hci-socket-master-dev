@@ -7,7 +7,8 @@ var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 
 var LeScanner = module.exports = function(option,callback) {
- 
+
+    console.log("option:"+JSON.stringify(option)+option["flag"]+option["timer"]+option["mi"]);
     //设置扫描时间
     var timer=Number(option["timer"]);
     //设置扫描距离
@@ -32,6 +33,7 @@ var LeScanner = module.exports = function(option,callback) {
         if ((new Date().getTime() - TempTime) > timer) {
             console.log('stoptime:' + (new Date().getTime() - TempTime));
             bluetoothHciSocket.stop();
+            callback("succeed");
         }
         else {
             if (data.readUInt8(0) === HCI_EVENT_PKT) {
@@ -81,7 +83,7 @@ var LeScanner = module.exports = function(option,callback) {
                 }
             }
         }
-        callback("succeed");
+
     });
 
     bluetoothHciSocket.on('error', function (error) {
