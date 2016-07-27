@@ -7,14 +7,13 @@ var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 
 var LeScanner = module.exports = function(option,callback) {
-
-    console.log("option:"+option);
+ 
     //设置扫描时间
     var timer=Number(option["timer"]);
     //设置扫描距离
     var mi=Number(option["mi"]);
     //标记位
-    var flag=option["falg"];
+    var flag=option["flag"];
 
     var TempTime = new Date().getTime();
     var bluetoothHciSocket = new BluetoothHciSocket();
