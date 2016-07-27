@@ -3,16 +3,18 @@
  */
 var BluetoothHciSocket = require('./index');
 var dbtools = require('./examples/dbtools');
+var EventEmitter = require('events').EventEmitter;
+var util = require('util');
 
+var LeScanner = module.exports = function(option,callback) {
 
-function lescan(scanner) {
-    this.mac = scanner.mac;
-    this.rssi = scanner.rssi;
-};
-
-module.export = lescan;
-
-lescan.LescanTest = function (option) {
+    console.log("option:"+option);
+    //设置扫描时间
+    var timer=Number(option["timer"]);
+    //设置扫描距离
+    var mi=Number(option["mi"]);
+    //标记位
+    var flag=option["falg"];
 
     var TempTime = new Date().getTime();
     var bluetoothHciSocket = new BluetoothHciSocket();
@@ -28,7 +30,7 @@ lescan.LescanTest = function (option) {
     bluetoothHciSocket.on('data', function (data) {
         console.log('data(hex): ' + data.toString('hex'));
         //console.log('data(ascii): ' + data.toString('ascii'));
-        if ((new Date().getTime() - TempTime) > 300000) {
+        if ((new Date().getTime() - TempTime) > timer) {
             console.log('stoptime:' + (new Date().getTime() - TempTime));
             bluetoothHciSocket.stop();
         }
@@ -70,16 +72,17 @@ lescan.LescanTest = function (option) {
                             "name": macName[mac],
                             "RSSI": rssi,
                             "time": new Date().getTime(),
-                            "flag": "model_1",
-                            "mi": 5,
+                            "flag": flag,
+                            "mi": mi,
                             "datetime": new Date()
                         };
                         dbtools.insertdb(args);
+
                     }
                 }
             }
         }
-
+        callback("succeed");
     });
 
     bluetoothHciSocket.on('error', function (error) {
@@ -177,3 +180,4 @@ lescan.LescanTest = function (option) {
 
 
 }
+util.inherits(LeScanner, EventEmitter);
