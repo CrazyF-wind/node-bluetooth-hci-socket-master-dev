@@ -1,6 +1,6 @@
 {
   "name": "andon-bluetooth-lescan-temp",
-  "version": "1.0.9",
+  "version": "1.1.7",
   "description": "Bluetooth HCI socket binding for Node.js",
   "main": "app.js",
   "scripts": {

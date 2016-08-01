@@ -32,6 +32,7 @@ var LeScanner = module.exports = function(option,callback) {
         //console.log('data(ascii): ' + data.toString('ascii'));
         if ((new Date().getTime() - TempTime) > timer) {
             console.log('stoptime:' + (new Date().getTime() - TempTime));
+            console.log('TempTime+new time():'+  TempTime+","+new Date().getTime());
             bluetoothHciSocket.stop();
             callback("succeed");
         }
@@ -78,7 +79,8 @@ var LeScanner = module.exports = function(option,callback) {
                             "datetime": new Date()
                         };
                         dbtools.insertdb(args);
-
+                        console.log('间隔时间:' + (new Date().getTime() - TempTime));
+                        //callback(args);
                     }
                 }
             }
