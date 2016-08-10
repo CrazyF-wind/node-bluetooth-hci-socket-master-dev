@@ -1,25 +1,19 @@
-var mongodb = require('andon-bluetooth-database');
+var dbhelper = require('andon-bluetooth-database');
 
 
-
+/**
+ * lesan新增扫描记录
+ * @param args
+ */
 exports.insertdb=function (args) {
-    mongodb.open(function (err, db) {
-        if (err) {
-            return err;
+    dbhelper.insertMongo('tb2', args, function (result) {
+        if (result === "ok") {
+            console.log("lesan新增扫描记录成功！");
+            callback("succeed");
         }
-        //读取 posts 集合
-        db.collection('tb2', function (err, collection) {
-            if (err) {
-                mongodb.close();
-            }
-            var data = [args];
-            collection.insert(data, function (err, result) {
-                if (err) {
-                    return err;
-                }
-                mongodb.close();
-            });
-        });
+        else {
+            console.log("lesan新增扫描记录失败，原因：" + JSON.stringify(result));
+        }
     });
 }
  
