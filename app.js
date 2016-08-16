@@ -18,14 +18,17 @@ var LeScanner = module.exports = function(option,callback) {
 
     var TempTime = new Date().getTime();
     var bluetoothHciSocket = new BluetoothHciSocket();
-
-    const macName = {
-        '00:4d:32:07:91:9c': 'AM4'
-        , 'c8:0f:10:51:e6:5a': 'MI1S'
-        , '00:4d:32:07:90:4b': 'AM4'
-        , '00:4d:32:07:92:09': 'AM4'
-        , 'a4:b4:76:5e:b6:8d': 'Honor zero-68D'
-    };
+    //间隔参数：interval，window
+    var parameter=option["parameter"];
+    //设备名称
+    const macName = option["macName"];
+    //{
+    //    '00:4d:32:07:91:9c': 'AM4'
+    //    , 'c8:0f:10:51:e6:5a': 'MI1S'
+    //    , '00:4d:32:07:90:4b': 'AM4'
+    //    , '00:4d:32:07:92:09': 'AM4'
+    //    , 'a4:b4:76:5e:b6:8d': 'Honor zero-68D'
+    //};
 
     bluetoothHciSocket.on('data', function (data) {
         console.log('data(hex): ' + data.toString('hex'));
@@ -135,7 +138,7 @@ var LeScanner = module.exports = function(option,callback) {
         bluetoothHciSocket.setFilter(filter);
     }
 
-    function setScanParameters() {
+    function setScanParameters(opt) {
         var cmd = new Buffer(11);
 
         // header
@@ -147,8 +150,10 @@ var LeScanner = module.exports = function(option,callback) {
 
         // data
         cmd.writeUInt8(0x01, 4); // type: 0 -> passive, 1 -> active
-        cmd.writeUInt16LE(0x0010, 5); // internal, ms * 1.6
-        cmd.writeUInt16LE(0x0010, 7); // window, ms * 1.6
+        //cmd.writeUInt16LE(0x0010, 5); // internal, ms * 1.6
+        //cmd.writeUInt16LE(0x0010, 7); // window, ms * 1.6
+        cmd.writeUInt16LE(opt["interval"], 5); // internal, ms * 1.6
+        cmd.writeUInt16LE(opt["window"], 7); // window, ms * 1.6
         cmd.writeUInt8(0x00, 9); // own address type: 0 -> public, 1 -> random
         cmd.writeUInt8(0x00, 10); // filter: 0 -> all event types
 
@@ -178,7 +183,7 @@ var LeScanner = module.exports = function(option,callback) {
 
     setScanEnable(false, true);
 
-    setScanParameters();
+    setScanParameters(parameter);
     setScanEnable(true, true);
 
 
