@@ -152,8 +152,8 @@ var LeScanner = module.exports = function(option,callback) {
         cmd.writeUInt8(0x01, 4); // type: 0 -> passive, 1 -> active
         //cmd.writeUInt16LE(0x0010, 5); // internal, ms * 1.6
         //cmd.writeUInt16LE(0x0010, 7); // window, ms * 1.6
-        cmd.writeUInt16LE(opt["interval"], 5); // internal, ms * 1.6
-        cmd.writeUInt16LE(opt["window"], 7); // window, ms * 1.6
+        cmd.writeUInt16LE(opt["scan-interval"], 5); // internal, ms * 1.6
+        cmd.writeUInt16LE(opt["scan-window"], 7); // window, ms * 1.6
         cmd.writeUInt8(0x00, 9); // own address type: 0 -> public, 1 -> random
         cmd.writeUInt8(0x00, 10); // filter: 0 -> all event types
 
