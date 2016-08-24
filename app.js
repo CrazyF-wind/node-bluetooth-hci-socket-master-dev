@@ -6,36 +6,31 @@ var dbtools = require('./examples/dbtools');
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 
-var LeScanner = module.exports = function(option,callback) {
+var TempTime = new Date();  //初始扫描时间
 
-    console.log("option:"+JSON.stringify(option)+option["flag"]+option["timer"]+option["mi"]);
+var LeScanner = module.exports = function (option, callback) {
+
+    console.log("option:" + JSON.stringify(option) + option["flag"] + option["timer"] + option["mi"]);
     //设置扫描时间
-    var timer=Number(option["timer"]);
+    var timer = Number(option["timer"]);
     //设置扫描距离
-    var mi=Number(option["mi"]);
+    var mi = Number(option["mi"]);
     //标记位
-    var flag=option["flag"];
+    var flag = option["flag"];
 
-    var TempTime = new Date().getTime();
+
     var bluetoothHciSocket = new BluetoothHciSocket();
     //间隔参数：interval，window
-    var parameter=option["parameter"];
+    var parameter = option["parameter"];
     //设备名称
     const macName = option["macName"];
-    //{
-    //    '00:4d:32:07:91:9c': 'AM4'
-    //    , 'c8:0f:10:51:e6:5a': 'MI1S'
-    //    , '00:4d:32:07:90:4b': 'AM4'
-    //    , '00:4d:32:07:92:09': 'AM4'
-    //    , 'a4:b4:76:5e:b6:8d': 'Honor zero-68D'
-    //};
 
     bluetoothHciSocket.on('data', function (data) {
         console.log('data(hex): ' + data.toString('hex'));
-        //console.log('data(ascii): ' + data.toString('ascii'));
-        if ((new Date().getTime() - TempTime) > timer) {
+        console.log('***********************************************8: ' + TempTime + "*******" + new Date());
+        if ((new Date().getTime() - TempTime.getTime()) > timer) {
             console.log('stoptime:' + (new Date().getTime() - TempTime));
-            console.log('TempTime+new time():'+  TempTime+","+new Date().getTime());
+            console.log('TempTime+new time():' + TempTime + "," + new Date().getTime());
             bluetoothHciSocket.stop();
             callback("succeed");
         }
@@ -138,6 +133,10 @@ var LeScanner = module.exports = function(option,callback) {
         bluetoothHciSocket.setFilter(filter);
     }
 
+    /**
+     * 参数设置
+     * @param opt 间隔时间
+     */
     function setScanParameters(opt) {
         var cmd = new Buffer(11);
 
@@ -181,10 +180,10 @@ var LeScanner = module.exports = function(option,callback) {
     setFilter();
     bluetoothHciSocket.start();
 
-    setScanEnable(false, true);
+    setScanEnable(false, false);
 
     setScanParameters(parameter);
-    setScanEnable(true, true);
+    setScanEnable(true, false);
 
 
 }
