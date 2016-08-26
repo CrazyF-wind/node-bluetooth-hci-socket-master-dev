@@ -12,11 +12,15 @@ var LeScanner = module.exports = function (option, callback) {
 
     console.log("option:" + JSON.stringify(option) + option["flag"] + option["timer"] + option["mi"]);
     //设置扫描时间
+    //var TempTime = option["TempTime"];
+    //设置扫描时间
     var timer = Number(option["timer"]);
     //设置扫描距离
     var mi = Number(option["mi"]);
     //标记位
     var flag = option["flag"];
+    //手机型号
+    var mobile = option["mobile"];
 
 
     var bluetoothHciSocket = new BluetoothHciSocket();
@@ -74,7 +78,8 @@ var LeScanner = module.exports = function (option, callback) {
                             "time": new Date().getTime(),
                             "flag": flag,
                             "mi": mi,
-                            "datetime": new Date()
+                            "datetime": new Date(),
+                            "mobile":mobile
                         };
                         dbtools.insertdb(args);
                         console.log('间隔时间:' + (new Date().getTime() - TempTime));
